@@ -1,0 +1,34 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+    background-color: aliceblue;
+}
+
+.schoodle {
+    font-family: 'Schoolbell', cursive;
+    font-size: 5rem;
+    color: #007bff;
+    text-shadow: 2px 2px #f8f9fa; 
+    transform: rotate(-7deg);
+    margin: 2rem;
+}
+a {
+    font-family: 'Schoolbell', cursive;
+    color: #f8f9fa!important;
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.border {
+    border: 4px solid #343a40!important;
+}
+
+.w-45{
+ width: 45%;
+}
+.w-95{
+    width: 95%;
+   }
+
+.btn {
+    font-size: 2rem;
+}
