@@ -16,6 +16,21 @@
      lehrer += "<li>" + rs.getInt("idLehrer") + " - " + rs.getString("nameLehrer") + "</li>";
   }
   lehrerliste.close();
+ %>
+ <%
+   PreparedStatement faecherliste = null;
+   String queryf = "SELECT * from faecher";
 
-
+   faecherliste = conn.prepareStatement(queryf);
+   ResultSet rsf = faecherliste.executeQuery();
+   int countf = 0;
+   String faecher = "";
+   while ( rsf.next()){
+     if(countf > 0){
+       out.print(",");
+     }
+     countf++;
+     faecher += "<li>" + rsf.getInt("idFach") + " - " + rsf.getString("Fach") + "</li>";
+  }
+  faecherliste.close();
  %>
