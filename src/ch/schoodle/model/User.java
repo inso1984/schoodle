@@ -8,9 +8,10 @@ package ch.schoodle.model;
 public class User {
 
 	private int idUser;
-	private String nameUser;
+	private String name;
 	private String pw;
 	private String eMail;
+	private String sex;
 
 	public int getIdUser() {
 		return idUser;
@@ -20,12 +21,12 @@ public class User {
 		this.idUser = idUser;
 	}
 
-	public String getNameUser() {
-		return nameUser;
+	public String getName() {
+		return name;
 	}
 
-	public void setNameUser(String nameUser) {
-		this.nameUser = nameUser;
+	public void setName(String nameUser) {
+		this.name = nameUser;
 	}
 
 	public String getPw() {
@@ -43,5 +44,14 @@ public class User {
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
 
 }

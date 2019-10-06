@@ -1,4 +1,4 @@
-package ch.scoodle.data;
+package ch.schoodle.data;
 
 
 import java.sql.Connection;

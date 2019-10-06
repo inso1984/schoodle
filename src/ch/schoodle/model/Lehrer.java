@@ -1,4 +1,4 @@
-package ch.scoodle.model;
+package ch.schoodle.model;
 
 /**
  * @author Janet Eberlein

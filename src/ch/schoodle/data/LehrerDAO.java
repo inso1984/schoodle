@@ -1,4 +1,4 @@
-package ch.scoodle.data;
+package ch.schoodle.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.scoodle.model.Lehrer;
+import ch.schoodle.model.Lehrer;
 /**
  * @author Janet Eberlein
  *
