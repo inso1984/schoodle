@@ -6,15 +6,31 @@
 
 <div class="container-fluid p-0">
 	<div class="container pt-5">
-		<div class="shadow p-4 bg-white text-center">
+		<div class="shadow p-4 bg-white">
 			<div class="row">
 				<div class="container">
-					<h3 class="mb-4">Meine Aufgaben</h3>
+					<h3 class="mb-4 text-center">Meine Aufgaben</h3>
+					<div class="card">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-2">Fach</div>
+								<div class="col-5">Aufgabe</div>
+								<div class="col-3">geplante Zeit</div>
+								<div class="col-2">zu erledigen bis</div>
+							</div>
+						</div>
+					</div>
 					<div id="accordion">
 						<div class="card">
 							<div class="card-header">
-								<a class="card-link" data-toggle="collapse" href="#collapseOne">Aufgabe
-									1</a>
+								<a class="card-link" data-toggle="collapse" href="#collapseOne">
+									<div class="row">
+										<div class="col-2">Französisch</div>
+										<div class="col-5">20 Vokabeln schreiben</div>
+										<div class="col-3">20 Minuten</div>
+										<div class="col-2">18.10.2019</div>
+									</div>
+								</a>
 							</div>
 							<div id="collapseOne" class="collapse show"
 								data-parent="#accordion">
@@ -55,10 +71,26 @@
 												</div>
 											</div>
 											<div class="col-6">
+												<div class="form-group">
+													<label for="beschreibung">zu erledigen bis:</label> <input
+														type="text" class="form-control" id="zuErledigenBis">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-6">
 												<div class="form-group form-check">
 													<label class="form-check-label"> <input
 														class="form-check-input" type="checkbox">
 														wiederholend
+													</label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group form-check">
+													<label class="form-check-label"> <input
+														class="form-check-input" type="checkbox" value="erledigt">
+														erledigt
 													</label>
 												</div>
 											</div>
@@ -100,3 +132,13 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(function() {
+
+		$('#zuErledigenBis').datepicker({
+			format : 'mm/dd/yyyy',
+			startDate : '-3d'
+		});
+	});
+</script>
