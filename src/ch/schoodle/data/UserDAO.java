@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Optional;
 
 import ch.schoodle.model.User;
 
@@ -14,10 +16,10 @@ public class UserDAO  extends DBConnector{
 	public boolean register(User user) {
 		String sql = "INSERT INTO user (`name`,`eMail`,`pw`,`sex`) VALUES(?,?,?,?)";
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(0, user.getName());
-			pstmt.setString(1, user.geteMail());
-			pstmt.setString(2, createPWHash(user.getPw()));
-			pstmt.setString(3, user.getSex());
+			pstmt.setString(1, user.getName());
+			pstmt.setString(2, user.geteMail());
+			pstmt.setString(3, createPWHash(user.getPw()));
+			pstmt.setString(4, user.getSex());
 			return pstmt.execute();
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -33,16 +35,22 @@ public class UserDAO  extends DBConnector{
 		return hashedPassword.toString();
 	}
 	
-	public boolean login(String user, String pw) {
+	public Optional<User> login(String userName, String pw) {
 		String sql = "SELECT * FROM user WHERE email=? AND pw=?";
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(0, user);
-			pstmt.setString(1, createPWHash(pw));
-			return pstmt.execute();
+			pstmt.setString(1, userName);
+			pstmt.setString(2, createPWHash(pw));
+			ResultSet rs = pstmt.executeQuery();
+			User user = new User();
+			user.setIdUser(rs.getInt("idUser"));
+			user.seteMail(rs.getString("eMail"));
+			user.setName(rs.getString("name"));
+			user.setSex(rs.getString("sex"));
+			return Optional.ofNullable(user);
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		return false;
+		return Optional.ofNullable(null);
 	}
 }

@@ -1,3 +1,4 @@
+<%@page import="ch.schoodle.controller.HomeController"%>
 <%@ page session="true" trimDirectiveWhitespaces="true" %>
 
 <%@  include file="/controllers/db_setup.jsp" %>
@@ -5,7 +6,7 @@
 
 <ul>
 <%
-out.print(request.getParameter("index"));
+  HomeController hc = new HomeController(request);
   if (application.getAttribute ("db") != null)
   {
     out.print(lehrer);

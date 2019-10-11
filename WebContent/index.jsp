@@ -1,9 +1,13 @@
+<%@page import="ch.schoodle.controller.AuthController"%>
 <%@page import="ch.schoodle.model.Lehrer"%>
 <%@page import="java.util.List"%>
 <%@page import="ch.schoodle.data.LehrerDAO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%
+AuthController auth = new AuthController(request);
+auth.checkAuth(response);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,12 +36,12 @@
 </head>
 
 <body>
-
+a
 
 	<%@ include file="../header.html"%>
 
 
-	<main> <%@ include file="../index.html"%>
+	<main> <%@ include file="../indexold.html"%>
 
 	<%@ include file="../dashboard.jsp"%> <%@ include
 		file="../aufgaben.jsp"%> </main>
