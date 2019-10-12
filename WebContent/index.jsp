@@ -6,7 +6,6 @@
 	pageEncoding="utf-8"%>
 <%
 AuthController auth = new AuthController(request);
-auth.checkAuth(response);
 %>
 <!DOCTYPE html>
 <html>
@@ -38,10 +37,10 @@ auth.checkAuth(response);
 <body>
 a
 
-	<%@ include file="../header.html"%>
+	<%@ include file="../header.jsp"%>
 
 
-	<main> <%@ include file="../indexold.html"%>
+	<main> <%@ include file="../indexTemplate.jsp"%>
 
 	<%@ include file="../dashboard.jsp"%> <%@ include
 		file="../aufgaben.jsp"%> </main>

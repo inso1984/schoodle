@@ -11,9 +11,13 @@
 				<li class="nav-item"><a class="nav-link" href="#">Fächer</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Lehrer</a></li>
 			</ul>
+			<%
+					if(!auth.checkAuth()){
+				%>
 			<button type="button"
 				class="btn btn-primary m-5 pl-4 pr-4 loginModal" data-toggle="modal"
 				data-target="#loginModal">Login</button>
+				<%}%>
 		</nav>
 	</div>
 </header>
@@ -29,17 +33,17 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
-			<form action="/login.jsp">
+			<form action="/Schoodle/login.jsp">
 				<!-- Modal body -->
 				<div class="modal-body">
 
 					<div class="form-group">
 						<label for="email">E-Mail:</label> <input type="email"
-							class="form-control" id="email">
+							class="form-control" name="email">
 					</div>
 					<div class="form-group">
-						<label for="pw">Passwort:</label> <input type="pw"
-							class="form-control" id="pw">
+						<label for="pw">Passwort:</label> <input type="password"
+							class="form-control" name="pw">
 					</div>
 					<div class="form-group form-check">
 						<label class="form-check-label"> <input

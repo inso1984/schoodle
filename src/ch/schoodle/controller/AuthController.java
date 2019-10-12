@@ -1,10 +1,12 @@
 package ch.schoodle.controller;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ch.schoodle.data.UserDAO;
 import ch.schoodle.model.User;
 
 public class AuthController {
@@ -14,11 +16,40 @@ public class AuthController {
 		this.user = (User) request.getSession().getAttribute("user");
 	}
 	
-	public void checkAuth(HttpServletResponse response) throws IOException {
-		System.out.println(this.user);
-		if(this.user == null) {
-			System.out.println("check user is null fuck");
-			response.sendRedirect("/Schoodle/login.jsp");
+	public boolean checkAuth() throws IOException {
+		return this.user != null;
+	}
+	
+	public void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		UserDAO userdao = new UserDAO();
+		String email = request.getParameter("email");
+		String pw = request.getParameter("pw");
+		Optional<User> loginUser = userdao.login(email,pw);
+		if(loginUser.isPresent()) {
+			request.getSession().setAttribute("user", loginUser.get());
+			response.sendRedirect("/Schoodle/");
+		}else {
+			response.sendRedirect("/Schoodle/?loginError=true");
 		}
+	}
+	
+	public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		UserDAO userdao = new UserDAO();
+		User newUser = new User();
+		
+		newUser.seteMail(request.getParameter("email"));
+		newUser.setName(request.getParameter("name"));
+		newUser.setPw(request.getParameter("pw"));
+		newUser.setSex(request.getParameter("sex"));
+		if(userdao.register(newUser)) {
+			response.sendRedirect("/Schoodle/?register=true");
+		}else {
+			response.sendRedirect("/Schoodle/?register=false");
+		}
+	}
+	
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.getSession().removeAttribute("user");
+		response.sendRedirect("/Schoodle/");
 	}
 }

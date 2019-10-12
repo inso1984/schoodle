@@ -3,5 +3,5 @@
     pageEncoding="utf-8"%>
 <%
 	AuthController auth = new AuthController(request);
-	auth.doLogin(request,response);
+	auth.register(request,response);
 %>

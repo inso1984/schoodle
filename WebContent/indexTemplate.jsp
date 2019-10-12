@@ -18,6 +18,9 @@
 					</div>
 					<div class="col-2"></div>
 				</div>
+				<%
+					if(!auth.checkAuth()){
+				%>
 				<div class="row text-center">
 					<div class="col-12">
 						<button type="button" class="btn btn-primary m-5 pl-4 pr-4"
@@ -25,11 +28,13 @@
 							kannst du dich kostenfrei registrieren</button>
 					</div>
 				</div>
+				<%} %>
 			</div>
 		</div>
 </body>
 
 <!-- Registrieren Modal -->
+
 <div class="modal" id="registrierenModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -40,19 +45,19 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
-			<form action="/registrieren.jsp">
+			<form method="post" action="/Schoodle/register.jsp">
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="name">Dein Name:</label> <input type="text"
-							class="form-control" id="name">
+							class="form-control" name="name">
 					</div>
 					<div class="form-group">
 						<label for="email">E-Mail:</label> <input type="email"
-							class="form-control" id="email">
+							class="form-control" name="email">
 					</div>
 					<div class="form-group">
-						<label for="pw">Passwort:</label> <input type="pw"
+						<label for="pw">Passwort:</label> <input type="password" name="pw"
 							class="form-control" id="pw">
 					</div>
 					<div class="form-check">
