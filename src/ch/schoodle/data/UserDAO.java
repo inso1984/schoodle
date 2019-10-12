@@ -1,10 +1,7 @@
 package ch.schoodle.data;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,12 +15,14 @@ public class UserDAO  extends DBConnector{
 	public boolean register(User user) {
 		String sql = "INSERT INTO user (`name`,`eMail`,`pw`,`sex`) VALUES(?,?,?,?)";
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, user.getName());
-			pstmt.setString(2, user.geteMail());
-			pstmt.setString(3, createPWHash(user.getPw()));
-			pstmt.setString(4, user.getSex());
-			pstmt.execute();
-			return true;
+			if(!this.userExist(user.geteMail())) {
+				pstmt.setString(1, user.getName());
+				pstmt.setString(2, user.geteMail());
+				pstmt.setString(3, createPWHash(user.getPw()));
+				pstmt.setString(4, user.getSex());
+				pstmt.execute();
+				return true;
+			}
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -55,7 +54,22 @@ public class UserDAO  extends DBConnector{
         return generatedPassword;
     }
 	    
-	
+	private boolean userExist(String email){
+		String sql = "SELECT * FROM user where eMail=?";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, email);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
+	}
+	 
 	public Optional<User> login(String email, String pw) {
 		String sql = "SELECT * FROM user WHERE eMail=? AND pw=?";
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
