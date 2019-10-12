@@ -35,8 +35,6 @@ AuthController auth = new AuthController(request);
 </head>
 
 <body>
-a
-
 	<%@ include file="../header.jsp"%>
 
 

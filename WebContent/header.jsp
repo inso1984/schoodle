@@ -17,7 +17,13 @@
 			<button type="button"
 				class="btn btn-primary m-5 pl-4 pr-4 loginModal" data-toggle="modal"
 				data-target="#loginModal">Login</button>
-				<%}%>
+				<%}else{
+					%>
+					<span class="userName">Hallo 
+					<%
+					out.print(auth.getUserName());
+					%></span><%
+				}%>
 		</nav>
 	</div>
 </header>
