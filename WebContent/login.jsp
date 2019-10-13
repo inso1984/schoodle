@@ -1,7 +1,4 @@
-<%@page import="ch.schoodle.controller.AuthController"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="utf-8"%>
-<%
+<%@page import="ch.schoodle.controller.AuthController"%><%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="utf-8"%>{"success":<%
 	AuthController auth = new AuthController(request);
-	auth.doLogin(request,response);
-%>
+	out.print(auth.doLogin(request,response));
+%>}

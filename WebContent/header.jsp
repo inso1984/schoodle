@@ -39,23 +39,26 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
-			<form action="/Schoodle/login.jsp">
+			<form action="/Schoodle/login.jsp" id="loginForm">
 				<!-- Modal body -->
 				<div class="modal-body">
 
 					<div class="form-group">
 						<label for="email">E-Mail:</label> <input type="email"
-							class="form-control" name="email">
+							class="form-control" name="email" id="loginEmail">
 					</div>
 					<div class="form-group">
 						<label for="pw">Passwort:</label> <input type="password"
-							class="form-control" name="pw">
+							class="form-control" name="pw" id="loginPw">
 					</div>
 					<div class="form-group form-check">
 						<label class="form-check-label"> <input
 							class="form-check-input" type="checkbox"> Passwort
 							vergessen
 						</label>
+					</div>
+					<div class="alert alert-danger hidden" id="loginError" role="alert">
+					  Fehler beim einloggen erneut versuchen.
 					</div>
 				</div>
 
@@ -78,3 +81,9 @@
 		</div>
 	</div>
 </div>
+<script src="/Schoodle/js/script.js"></script>
+<script>
+	$("#loginForm").on("submit",function(){
+		Login.doLogin();return false;
+	});
+</script>

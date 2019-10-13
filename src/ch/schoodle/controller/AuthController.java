@@ -20,16 +20,17 @@ public class AuthController {
 		return this.user != null;
 	}
 	
-	public void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public boolean doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		UserDAO userdao = new UserDAO();
 		String email = request.getParameter("email");
 		String pw = request.getParameter("pw");
 		Optional<User> loginUser = userdao.login(email,pw);
 		if(loginUser.isPresent()) {
 			request.getSession().setAttribute("user", loginUser.get());
-			response.sendRedirect("/Schoodle/");
+			return true;
 		}else {
-			response.sendRedirect("/Schoodle/?loginError=true");
+			return false;
+			//response.sendRedirect("/Schoodle/?loginError=true");
 		}
 	}
 	
