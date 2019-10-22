@@ -53,8 +53,12 @@ public class AuthController {
 		request.getSession().removeAttribute("user");
 		response.sendRedirect("/Schoodle/");
 	}
-	
+		
 	public String getUserName() {
 		return this.user.getName();
+	}
+	
+	public void redirectToHome(HttpServletResponse response) throws IOException {
+		response.sendRedirect("/Schoodle/");
 	}
 }

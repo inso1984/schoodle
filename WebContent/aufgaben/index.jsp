@@ -6,6 +6,9 @@
 	pageEncoding="utf-8"%>
 <%
 AuthController auth = new AuthController(request);
+if(!auth.checkAuth()){
+	auth.redirectToHome(response);
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +24,7 @@ AuthController auth = new AuthController(request);
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans|Schoolbell&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="schoodle.css"
+<link rel="stylesheet" type="text/css" href="/Schoodle/schoodle.css"
 	media="screen" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -38,9 +41,9 @@ AuthController auth = new AuthController(request);
 	<%@ include file="../header.jsp"%>
 
 
-	<main> <%@ include file="../indexTemplate.jsp"%>
+	<main>
 
-	<%@ include file="../dashboard.jsp"%>
+	<%@ include	file="./aufgaben.jsp"%> </main>
 
 
 </body>

@@ -5,8 +5,8 @@
 	pageEncoding="utf-8"%>
 <%
 	LehrerDAO lehrerDAO = new LehrerDAO();
-
 	List<Lehrer> lehrerList = lehrerDAO.getLehrerList();
+	if(auth.checkAuth()){
 %>
 
 <div class="container-fluid p-0">
@@ -47,3 +47,4 @@
 		</div>
 	</div>
 </div>
+<%}%>
