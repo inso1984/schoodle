@@ -7,6 +7,7 @@
 <%
 AuthController auth = new AuthController(request);
 if(!auth.checkAuth()){
+	
 	auth.redirectToHome(response);
 }
 %>
@@ -14,38 +15,14 @@ if(!auth.checkAuth()){
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Schoodle</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans|Schoolbell&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/Schoodle/schoodle.css"
-	media="screen" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<title>Schoodle - Aufgaben</title>
+<%@ include file="../htmlHead.html"%>
 </head>
 
 <body>
 	<%@ include file="../header.jsp"%>
-
-
 	<main>
-
 	<%@ include	file="./aufgaben.jsp"%> </main>
-
-
 </body>
 
 </html>

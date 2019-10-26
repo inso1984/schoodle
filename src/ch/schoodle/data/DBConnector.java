@@ -4,6 +4,7 @@ package ch.schoodle.data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class DBConnector {
 
@@ -25,4 +26,12 @@ public class DBConnector {
         }
         return conn;
     }
+	
+	protected Date toJavaDate(java.sql.Date sqlDate) {
+		return sqlDate != null ? new Date(sqlDate.getTime()) : null;
+	}
+
+	protected boolean toBoolean(int val) {
+		return val==1;
+	}
 }

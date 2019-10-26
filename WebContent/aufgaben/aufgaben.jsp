@@ -1,3 +1,8 @@
+<%@page import="ch.schoodle.model.Fach"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="ch.schoodle.applicationdata.Faecher"%>
+<%@page import="ch.schoodle.model.Aufgabe"%>
+<%@page import="ch.schoodle.controller.AufgabenController"%>
 <%@page import="ch.schoodle.model.Lehrer"%>
 <%@page import="java.util.List"%>
 <%@page import="ch.schoodle.data.LehrerDAO"%>
@@ -20,18 +25,32 @@
 							</div>
 						</div>
 					</div>
+					
 					<div id="accordion">
+						
+						<%
+						AufgabenController controller = new AufgabenController(request);
+						List<Aufgabe> aufgabenList = controller.getMeineAufgaben(auth.getUser());
+						SimpleDateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
+						List<Fach> faecher = Faecher.INSTANCE.getFaecher();
+						String selected = "";
+						for(Aufgabe aufgabe : aufgabenList ){
+						%>
+						
 						<div class="card">
 							<div class="card-header">
 								<a class="card-link" data-toggle="collapse" href="#collapseOne">
 									<div class="row">
-										<div class="col-2">Französisch</div>
-										<div class="col-5">20 Vokabeln schreiben</div>
-										<div class="col-3">20 Minuten</div>
-										<div class="col-2">18.10.2019</div>
+										<div class="col-2"><%out.print(Faecher.INSTANCE.getFachById(aufgabe.getFach()).getFach());%></div>
+										<div class="col-5"><%out.print(aufgabe.getTitel());%></div>
+										<div class="col-3"><%out.print((int)aufgabe.getGeplanteZeit()); %> Minuten</div>
+										<div class="col-2"><%
+										out.print(aufgabe.getZuErledigenBis()!=null?formater.format(aufgabe.getZuErledigenBis()) : ""); 
+										%></div>
 									</div>
 								</a>
 							</div>
+							
 							<div id="collapseOne" class="collapse show"
 								data-parent="#accordion">
 								<div class="card-body">
@@ -40,18 +59,24 @@
 											<div class="col-6">
 												<div class="form-group">
 													<label for="fach">Fach:</label> <select
-														class="form-control" id="fach">
-														<option value="">Mathe</option>
-														<option value="">Deutsch</option>
-														<option value="">Englisch</option>
-														<option value="">Französisch</option>
+														class="form-control" name="fach" id="fach">
+														<%
+															;
+															for(Fach fach : faecher){
+																selected = "";
+																if(aufgabe.getFach() == fach.getIdFach()){
+																	selected = " selected=\"selected\"";
+																}
+														%>
+														<option<%out.print(selected); %> value="<%out.print(fach.getIdFach());%>"><%out.print(fach.getFach());%></option>
+														<%} %>
 													</select>
 												</div>
 											</div>
 											<div class="col-6">
 												<div class="form-group">
 													<label for="titel">Titel:</label> <input type="text"
-														class="form-control" id="titel">
+														class="form-control" id="titel" name="titel" placeholder="Titel" value="<%out.print(aufgabe.getTitel());%>">
 												</div>
 											</div>
 										</div>
@@ -59,21 +84,29 @@
 											<div class="col-12">
 												<div class="form-group">
 													<label for="beschreibung">Aufgabe:</label>
-													<textarea class="form-control" rows="5" id="beschreibung"></textarea>
+													<textarea class="form-control" rows="5" id="beschreibung"><%out.print(aufgabe.getBeschreibung());%></textarea>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-6">
 												<div class="form-group">
-													<label for="beschreibung">geplante Zeit in Minuten:</label>
-													<input type="text" class="form-control" id="geplanteZeit">
+													<label for="geplanteZeit">geplante Zeit in Minuten:</label>
+													<input type="text" class="form-control" id="geplanteZeit" value="<%out.print((int)aufgabe.getGeplanteZeit());%>">
 												</div>
 											</div>
 											<div class="col-6">
 												<div class="form-group">
-													<label for="beschreibung">zu erledigen bis:</label> <input
-														type="text" class="form-control" id="zuErledigenBis">
+													<label for="zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>">zu erledigen bis:</label> <input
+														type="text" class="form-control" id="zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>" value="<%
+														out.print(aufgabe.getZuErledigenBis() != null? formater.format(aufgabe.getZuErledigenBis()) : "");
+														%>">
+														<script>
+														$(function() {
+															initDatePicker('zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>')
+															
+														});
+													</script>
 												</div>
 											</div>
 										</div>
@@ -81,7 +114,7 @@
 											<div class="col-6">
 												<div class="form-group form-check">
 													<label class="form-check-label"> <input
-														class="form-check-input" type="checkbox">
+														class="form-check-input" type="checkbox"<%out.print(aufgabe.isWiederholend()?" checked=\"checked\"":""); %>>
 														wiederholend
 													</label>
 												</div>
@@ -89,7 +122,7 @@
 											<div class="col-6">
 												<div class="form-group form-check">
 													<label class="form-check-label"> <input
-														class="form-check-input" type="checkbox" value="erledigt">
+														class="form-check-input" type="checkbox" value="erledigt"<%out.print(aufgabe.isErledigt()?" checked=\"checked\"":""); %>>
 														erledigt
 													</label>
 												</div>
@@ -107,38 +140,20 @@
 									</form>
 								</div>
 							</div>
+							
 						</div>
-						<div class="card">
-							<div class="card-header">
-								<a class="collapsed card-link" data-toggle="collapse"
-									href="#collapseTwo">Aufgabe 2</a>
-							</div>
-							<div id="collapseTwo" class="collapse" data-parent="#accordion">
-								<div class="card-body"></div>
-							</div>
-						</div>
-						<div class="card">
-							<div class="card-header">
-								<a class="collapsed card-link" data-toggle="collapse"
-									href="#collapseThree">Aufgabe 3</a>
-							</div>
-							<div id="collapseThree" class="collapse" data-parent="#accordion">
-								<div class="card-body"></div>
-							</div>
-						</div>
+						<%} %>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 <script>
-	$(function() {
-
-		$('#zuErledigenBis').datepicker({
-			format : 'mm/dd/yyyy',
-			startDate : '-3d'
-		});
+function initDatePicker(id){
+	$('#'+id).datepicker({
+		dateFormat : 'dd.mm.yy',
+		startDate : '-3d'
 	});
+}
 </script>
