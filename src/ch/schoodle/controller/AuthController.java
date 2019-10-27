@@ -66,5 +66,6 @@ public class AuthController {
 	public void redirectToHome(HttpServletResponse response) throws IOException {
 		System.out.println("redirect");
 		response.sendRedirect("/Schoodle/");
+		return;
 	}
 }

@@ -9,7 +9,7 @@ AuthController auth = new AuthController(request);
 if(!auth.checkAuth()){
 	
 	auth.redirectToHome(response);
-}
+}else{
 %>
 <!DOCTYPE html>
 <html>
@@ -26,3 +26,4 @@ if(!auth.checkAuth()){
 </body>
 
 </html>
+<%}%>
