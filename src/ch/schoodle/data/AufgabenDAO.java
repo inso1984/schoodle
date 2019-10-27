@@ -43,7 +43,7 @@ public class AufgabenDAO extends DBConnector{
 			}
 			resultSet.close();
 		}catch(Exception e) {
-			System.out.println("Error in getFaecherList");
+			System.out.println("Error in getAllAufgabenForUser");
 			e.printStackTrace();
 		}
 		return result;
