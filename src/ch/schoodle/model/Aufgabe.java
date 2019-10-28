@@ -8,26 +8,26 @@ import java.util.Date;
  *
  */
 public class Aufgabe {
-	private int idAufgaben;
-	private int fach;
+	private Integer idAufgaben;
+	private Integer fach;
 	private String titel;
 	private String beschreibung;
 	private Date zuErledigenBis;
-	private float geplanteZeit;
-	private float benoetigteZeit;
+	private Float geplanteZeit;
+	private Float benoetigteZeit;
 	private boolean wiederholend;
 	private boolean erledigt;
-	private int user;
+	private Integer user;
 	public int getIdAufgaben() {
 		return idAufgaben;
 	}
-	public void setIdAufgaben(int idAufgaben) {
+	public void setIdAufgaben(Integer idAufgaben) {
 		this.idAufgaben = idAufgaben;
 	}
-	public int getFach() {
+	public Integer getFach() {
 		return fach;
 	}
-	public void setFach(int fach) {
+	public void setFach(Integer fach) {
 		this.fach = fach;
 	}
 	public String getTitel() {
@@ -48,16 +48,16 @@ public class Aufgabe {
 	public void setZuErledigenBis(Date zuErledigenBis) {
 		this.zuErledigenBis = zuErledigenBis;
 	}
-	public float getGeplanteZeit() {
+	public Float getGeplanteZeit() {
 		return geplanteZeit;
 	}
-	public void setGeplanteZeit(float geplanteZeit) {
+	public void setGeplanteZeit(Float geplanteZeit) {
 		this.geplanteZeit = geplanteZeit;
 	}
-	public float getBenoetigteZeit() {
+	public Float getBenoetigteZeit() {
 		return benoetigteZeit;
 	}
-	public void setBenoetigteZeit(float benoetigteZeit) {
+	public void setBenoetigteZeit(Float benoetigteZeit) {
 		this.benoetigteZeit = benoetigteZeit;
 	}
 	public boolean isWiederholend() {
@@ -75,7 +75,7 @@ public class Aufgabe {
 	public int getUser() {
 		return user;
 	}
-	public void setUser(int user) {
+	public void setUser(Integer user) {
 		this.user = user;
 	}
 }

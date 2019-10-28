@@ -30,6 +30,7 @@
 						
 						<%
 						AufgabenController controller = new AufgabenController(request);
+						controller.chkSave();
 						List<Aufgabe> aufgabenList = controller.getMeineAufgaben(auth.getUser());
 						SimpleDateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
 						List<Fach> faecher = Faecher.INSTANCE.getFaecher();
@@ -43,7 +44,7 @@
 									<div class="row">
 										<div class="col-2"><%out.print(Faecher.INSTANCE.getFachById(aufgabe.getFach()).getFach());%></div>
 										<div class="col-5"><%out.print(aufgabe.getTitel());%></div>
-										<div class="col-3"><%out.print((int)aufgabe.getGeplanteZeit()); %> Minuten</div>
+										<div class="col-3"><%out.print(aufgabe.getGeplanteZeit()); %> Minuten</div>
 										<div class="col-2"><%
 										out.print(aufgabe.getZuErledigenBis()!=null?formater.format(aufgabe.getZuErledigenBis()) : ""); 
 										%></div>
@@ -54,7 +55,8 @@
 							<div id="collapseOne" class="collapse show"
 								data-parent="#accordion">
 								<div class="card-body">
-									<form action="/action_page.php">
+									<form action="index.jsp" method="post">
+									<input type="hidden" name="idAufgaben" value="<%out.print(aufgabe.getIdAufgaben()); %>"
 										<div class="row">
 											<div class="col-6">
 												<div class="form-group">
@@ -84,7 +86,7 @@
 											<div class="col-12">
 												<div class="form-group">
 													<label for="beschreibung">Aufgabe:</label>
-													<textarea class="form-control" rows="5" id="beschreibung"><%out.print(aufgabe.getBeschreibung());%></textarea>
+													<textarea class="form-control" rows="5" name="beschreibung" id="beschreibung"><%out.print(aufgabe.getBeschreibung());%></textarea>
 												</div>
 											</div>
 										</div>
@@ -92,19 +94,19 @@
 											<div class="col-6">
 												<div class="form-group">
 													<label for="geplanteZeit">geplante Zeit in Minuten:</label>
-													<input type="text" class="form-control" id="geplanteZeit" value="<%out.print((int)aufgabe.getGeplanteZeit());%>">
+													<input type="text" class="form-control" name="geplanteZeit" id="geplanteZeit" value="<%out.print(aufgabe.getGeplanteZeit());%>">
 												</div>
 											</div>
 											<div class="col-6">
 												<div class="form-group">
-													<label for="zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>">zu erledigen bis:</label> <input
-														type="text" class="form-control" id="zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>" value="<%
+													<label for="zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>">zu erledigen bis:</label> 
+													<input
+														type="text" class="form-control" name="zuErledigenBis" id="zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>" value="<%
 														out.print(aufgabe.getZuErledigenBis() != null? formater.format(aufgabe.getZuErledigenBis()) : "");
 														%>">
 														<script>
 														$(function() {
 															initDatePicker('zuErledigenBis<%out.print(aufgabe.getIdAufgaben());%>')
-															
 														});
 													</script>
 												</div>
@@ -114,7 +116,7 @@
 											<div class="col-6">
 												<div class="form-group form-check">
 													<label class="form-check-label"> <input
-														class="form-check-input" type="checkbox"<%out.print(aufgabe.isWiederholend()?" checked=\"checked\"":""); %>>
+														class="form-check-input" value="1" name="wiederholend" type="checkbox"<%out.print(aufgabe.isWiederholend()?" checked=\"checked\"":""); %>>
 														wiederholend
 													</label>
 												</div>
@@ -122,7 +124,7 @@
 											<div class="col-6">
 												<div class="form-group form-check">
 													<label class="form-check-label"> <input
-														class="form-check-input" type="checkbox" value="erledigt"<%out.print(aufgabe.isErledigt()?" checked=\"checked\"":""); %>>
+														class="form-check-input" type="checkbox" name="erledigt" value="1"<%out.print(aufgabe.isErledigt()?" checked=\"checked\"":""); %>>
 														erledigt
 													</label>
 												</div>
