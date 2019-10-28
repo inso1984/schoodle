@@ -14,6 +14,7 @@ public class AuthController {
 	private User user = null;
 	public AuthController(HttpServletRequest request) {
 		this.user = (User) request.getSession().getAttribute("user");
+		System.out.println(this.user);
 	}
 	
 	public boolean checkAuth() throws IOException {
@@ -58,7 +59,13 @@ public class AuthController {
 		return this.user.getName();
 	}
 	
+	public User getUser() {
+		return this.user;
+	}
+	
 	public void redirectToHome(HttpServletResponse response) throws IOException {
+		System.out.println("redirect");
 		response.sendRedirect("/Schoodle/");
+		return;
 	}
 }
