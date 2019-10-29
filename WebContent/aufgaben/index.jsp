@@ -14,7 +14,7 @@ if(!auth.checkAuth()){
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Schoodle - Aufgaben</title>
 <%@ include file="../htmlHead.html"%>
 </head>
@@ -22,7 +22,7 @@ if(!auth.checkAuth()){
 <body>
 	<%@ include file="../header.jsp"%>
 	<main>
-	<%@ include	file="./aufgaben.jsp"%> </main>
+	<%@ include	file="aufgaben.jsp"%> </main>
 </body>
 
 </html>

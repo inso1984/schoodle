@@ -6,8 +6,6 @@
 <%@page import="ch.schoodle.model.Lehrer"%>
 <%@page import="java.util.List"%>
 <%@page import="ch.schoodle.data.LehrerDAO"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
 
 <div class="container-fluid p-0">
 	<div class="container pt-5">
@@ -25,22 +23,118 @@
 							</div>
 						</div>
 					</div>
-					
+					<%
+					List<Fach> faecher = Faecher.INSTANCE.getFaecher();
+					String selected = "";
+					%>
 					<div id="accordion">
-						
+					
+						<!-- New -->
+						<div class="card">
+							<div class="card-header">
+								<a class="card-link" data-toggle="collapse" href="#collapseOne">
+									<div class="row">
+										<div class="col-12">Neue Aufgabe</div>
+									</div>
+								</a>
+							</div>
+							
+							<div id="collapseOne" class="collapse"
+								data-parent="#accordion">
+								<div class="card-body">
+									<form action="./" method="post">
+										<input type="hidden" name="user" value="<%out.print(auth.getUser().getIdUser());%>">
+										<div class="row">
+											<div class="col-6">
+												<div class="form-group">
+													<label for="fach">Fach:</label> <select
+														class="form-control" name="fach" id="fach">
+														<%
+															for(Fach fach : faecher){
+																
+														%>
+														<option value="<%out.print(fach.getIdFach());%>"><%out.print(fach.getFach());%></option>
+														<%} %>
+													</select>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group">
+													<label for="titel">Titel:</label> <input type="text"
+														class="form-control" id="titel" name="titel" placeholder="Titel">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+													<label for="beschreibung">Aufgabe:</label>
+													<textarea class="form-control" rows="5" name="beschreibung" id="beschreibung"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-6">
+												<div class="form-group">
+													<label for="geplanteZeit">geplante Zeit in Minuten:</label>
+													<input type="text" class="form-control" name="geplanteZeit" id="geplanteZeit">
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group">
+													<label for="zuErledigenBis">zu erledigen bis:</label> 
+													<input type="text" class="form-control" name="zuErledigenBis" id="zuErledigenBis">
+													<script>
+														$(function() {
+															initDatePicker('zuErledigenBis')
+														});
+													</script>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-6">
+												<div class="form-group form-check">
+													<label class="form-check-label"> <input
+														class="form-check-input" value="1" name="wiederholend" type="checkbox">
+														wiederholend
+													</label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group form-check">
+													<label class="form-check-label"> <input
+														class="form-check-input" type="checkbox" name="erledigt" value="1">
+														erledigt
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="d-flex justify-content-between">
+											<div class="">
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">abbrechen</button>
+											</div>
+											<div class="">
+												<button type="submit" class="btn btn-primary">speichern</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							
+						</div>
 						<%
 						AufgabenController controller = new AufgabenController(request);
 						controller.chkSave();
 						List<Aufgabe> aufgabenList = controller.getMeineAufgaben(auth.getUser());
 						SimpleDateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
-						List<Fach> faecher = Faecher.INSTANCE.getFaecher();
-						String selected = "";
 						for(Aufgabe aufgabe : aufgabenList ){
 						%>
 						
 						<div class="card">
 							<div class="card-header">
-								<a class="card-link" data-toggle="collapse" href="#collapseOne">
+								<a class="card-link" data-toggle="collapse" href="#collapse<%out.print(aufgabe.getIdAufgaben());%>">
 									<div class="row">
 										<div class="col-2"><%out.print(Faecher.INSTANCE.getFachById(aufgabe.getFach()).getFach());%></div>
 										<div class="col-5"><%out.print(aufgabe.getTitel());%></div>
@@ -52,11 +146,12 @@
 								</a>
 							</div>
 							
-							<div id="collapseOne" class="collapse show"
+							<div id="collapse<%out.print(aufgabe.getIdAufgaben());%>" class="collapse"
 								data-parent="#accordion">
 								<div class="card-body">
-									<form action="index.jsp" method="post">
-									<input type="hidden" name="idAufgaben" value="<%out.print(aufgabe.getIdAufgaben()); %>"
+									<form action="./" method="post">
+										<input type="hidden" name="user" value="<%out.print(auth.getUser().getIdUser());%>">
+									    <input type="hidden" name="idAufgaben" value="<%out.print(aufgabe.getIdAufgaben()); %>"
 										<div class="row">
 											<div class="col-6">
 												<div class="form-group">
