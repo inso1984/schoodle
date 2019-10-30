@@ -10,4 +10,6 @@ public class Names {
 	public static final String BENOETIGTEZEIT = "benötigteZeit";
 	public static final String WIEDERHOLEND = "wiederholend";
 	public static final String ERLEDIGT = "erledigt";
+	public static final String USER = "user";
+	public static final String TABLE_AUFGABEN = "`schoodle`.`aufgaben`";
 }

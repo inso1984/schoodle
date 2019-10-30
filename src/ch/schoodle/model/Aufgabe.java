@@ -72,7 +72,7 @@ public class Aufgabe {
 	public void setErledigt(boolean erledigt) {
 		this.erledigt = erledigt;
 	}
-	public int getUser() {
+	public Integer getUser() {
 		return user;
 	}
 	public void setUser(Integer user) {

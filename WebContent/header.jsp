@@ -1,9 +1,9 @@
 <header>
 	<div class="container-fluid p-0">
 		<nav class="navbar navbar-expand-sm bg-dark justify-content-between">
-			<h1 class="schoodle">Schoodle</h1>
+			<h1 class="schoodle"><a href="/Schoodle/">Schoodle</a></h1>
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="#">Aufgaben</a>
+				<li class="nav-item"><a class="nav-link" href="/Schoodle/aufgaben/">Aufgaben</a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="#">Stundenplan</a>
 				</li>

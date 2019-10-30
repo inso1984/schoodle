@@ -1,5 +1,6 @@
 package ch.schoodle.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +13,10 @@ import ch.schoodle.model.User;
 
 public class AufgabenController {
 	private HttpServletRequest request;
-	public AufgabenController(HttpServletRequest request) {
+	public AufgabenController(HttpServletRequest request) throws UnsupportedEncodingException {
 		this.request = request;
+		this.request.setCharacterEncoding("UTF-8");
+
 	}
 	
 	public List<Aufgabe> getMeineAufgaben(User user){
@@ -26,7 +29,8 @@ public class AufgabenController {
 		String title = this.request.getParameter(Names.TITEL);
 		String id = this.request.getParameter(Names.IDAUFGABEN);
 		if(title != null) {			
-			if(id!=null) {
+			if(id!=null ) {
+				System.out.println(id);
 				updateAufgabe(Integer.valueOf(id));
 			}else {
 				createAufgabe();
@@ -37,11 +41,14 @@ public class AufgabenController {
 	
 	private void createAufgabe() {
 		Aufgabe aufgabe = createAufgabeFromRequest(null);
-		
+		AufgabenDAO aufgabenDAO = new AufgabenDAO();
+		aufgabenDAO.insertAufgabe(aufgabe);
 	}
 
 	private void updateAufgabe(int id) {
+		
 		Aufgabe aufgabe = createAufgabeFromRequest(id);
+		System.out.println(aufgabe.getTitel());
 		AufgabenDAO aufgabenDAO = new AufgabenDAO();
 		aufgabenDAO.updateAufgaben(aufgabe);
 		
@@ -53,10 +60,12 @@ public class AufgabenController {
 		String fach = request.getParameter(Names.FACH);
 		String titel = request.getParameter(Names.TITEL);
 		String zuErledigenBis = request.getParameter(Names.ZUERLEDIGTENBIS);
+		Integer userId = Integer.parseInt(request.getParameter(Names.USER));
 		Aufgabe aufgabe = new Aufgabe();
 		aufgabe.setIdAufgaben(id!=null?id:-1);
 		aufgabe.setTitel(titel);
-		aufgabe.setBeschreibung(beschreibung);		
+		aufgabe.setBeschreibung(beschreibung);	
+		aufgabe.setUser(userId);
 		aufgabe.setGeplanteZeit(geplanteZeit==null || geplanteZeit.isEmpty() ? null : Float.parseFloat(geplanteZeit));
 		System.out.println(benoetigteZeit);
 		aufgabe.setBenoetigteZeit((benoetigteZeit == null || benoetigteZeit.isEmpty())? null : Float.parseFloat(benoetigteZeit));

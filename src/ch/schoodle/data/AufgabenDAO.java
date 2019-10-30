@@ -11,11 +11,9 @@ import ch.schoodle.applicationdata.Names;
 import ch.schoodle.model.Aufgabe;
 
 public class AufgabenDAO extends DBConnector{
-	private final String SQL_AUFGABENFORUSER = "SELECT * FROM aufgaben WHERE user=?;";
-
 
 	public List<Aufgabe> getAllAufgabenForUser(int userId){
-		System.out.println("Userid: " + userId);
+		final String SQL_AUFGABENFORUSER = "SELECT * FROM " + Names.TABLE_AUFGABEN + " WHERE " + Names.USER + "=?;";
 		List<Aufgabe> result = new ArrayList<>();
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(SQL_AUFGABENFORUSER)) {
 			pstmt.setInt(1, userId);
@@ -42,8 +40,8 @@ public class AufgabenDAO extends DBConnector{
 	}
 	
 	public int updateAufgaben(Aufgabe aufgabe) {
-		final String SQL_UPDATE = "UPDATE aufgaben SET " + Names.TITEL + " =?, " + Names.BESCHREIBUNG + " =?, " + Names.FACH + " =?, "
-		+ Names.GEPLANTEZEIT + " =?, " + Names.BENOETIGTEZEIT + " =?, " + Names.WIEDERHOLEND + " =?, "
+		final String SQL_UPDATE = "UPDATE " + Names.TABLE_AUFGABEN + " SET " + Names.TITEL + " =?, " + Names.BESCHREIBUNG + " =?, " + Names.FACH + " =?,"
+		+ Names.GEPLANTEZEIT + " =?, " + Names.BENOETIGTEZEIT + " =?, " + Names.WIEDERHOLEND + " =?,"
 		+ Names.ERLEDIGT + " =?, " + Names.ZUERLEDIGTENBIS + " =? WHERE " + Names.IDAUFGABEN + " =?;";
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(SQL_UPDATE)) {
 			pstmt.setString(1, aufgabe.getTitel());
@@ -61,7 +59,33 @@ public class AufgabenDAO extends DBConnector{
 			e.printStackTrace();
 			return -1;
 		}
-		
-		
+	}
+	
+	public Aufgabe insertAufgabe(Aufgabe aufgabe) {
+		final String SQL_INSERT = "INSERT INTO " +  Names.TABLE_AUFGABEN + 
+				"(" + Names.TITEL + ",`" + Names.BESCHREIBUNG + "`,`" + Names.FACH + "`,`" + Names.GEPLANTEZEIT + "`,`" + Names.BENOETIGTEZEIT + "`," + 
+				"`" + Names.WIEDERHOLEND + "`,`" + Names.ERLEDIGT + "`,`" + Names.ZUERLEDIGTENBIS + "`,`" + Names.USER + "`)" + 
+				"VALUES(?,?,?,?,?,?,?,?,?);"; 
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT)) {
+			pstmt.setString(1, aufgabe.getTitel());
+			pstmt.setString(2, aufgabe.getBeschreibung());
+			pstmt.setInt(3, aufgabe.getFach());
+			pstmt.setFloat(4, aufgabe.getGeplanteZeit() == null ? 0:aufgabe.getGeplanteZeit());
+			pstmt.setFloat(5, aufgabe.getBenoetigteZeit()==null?0:aufgabe.getBenoetigteZeit());
+			pstmt.setBoolean(6, aufgabe.isWiederholend());
+			pstmt.setBoolean(7, aufgabe.isErledigt());
+			pstmt.setDate(8, aufgabe.getZuErledigenBis()!=null?new Date(aufgabe.getZuErledigenBis().getTime()):null);
+			pstmt.setInt(9, aufgabe.getUser());
+			pstmt.executeUpdate();
+			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+	            if (rs.next()) {
+	    			aufgabe.setIdAufgaben(rs.getInt(Names.IDAUFGABEN));
+	            }
+	        }
+			return aufgabe;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return aufgabe;
 	}
 }
